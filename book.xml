@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogue>
+    <book id="B001">
+        <title>XML基础</title>
+        <author>张三</author>
+        <price>45.00</price>
+    </book>
+    <book id="B002">
+        <title>JavaScript入门</title>
+        <author>李四</author>
+        <price>59.90</price>
+    </book>
+    <book id="B003">
+        <title>Web开发实践</title>
+        <author>王五</author>
+        <price>68.00</price>
+    </book>
+    <book id="B004">
+        <title>数据结构与算法</title>
+        <author>赵六</author>
+        <price>79.50</price>
+    </book>
+</catalogue>
