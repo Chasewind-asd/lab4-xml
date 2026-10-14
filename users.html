@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户档案</title>
+    <style>
+        body { font-family: Arial, "Microsoft YaHei", sans-serif; margin: 30px; }
+        h1 { color: #2c3e50; }
+        #status { margin: 10px 0; color: #555; }
+        .user-card { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; max-width: 600px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .user-card h3 { margin-top: 0; color: #2980b9; }
+        .user-card p { margin: 5px 0; }
+        .label { font-weight: bold; color: #555; }
+    </style>
+</head>
+<body>
+<h1>用户档案列表</h1>
+<p id="status">正在加载...</p>
+<div id="userList"></div>
+
+<script>
+    const statusEl = document.getElementById('status');
+    const userListEl = document.getElementById('userList');
+
+    fetch('userProfiles.json')
+        .then(response => {
+            if (!response.ok)
+                throw new Error('Fetch error: ' + response.status);
+            else
+                return response.json();
+        })
+        .then(json => {
+            statusEl.style.display = 'none';
+
+            json.forEach(user => {
+                const card = document.createElement('div');
+                card.className = 'user-card';
+
+                // 构建卡片内容
+                card.innerHTML = `
+                        <h3>${user.firstName} ${user.lastName}</h3>
+                        <p><span class="label">Email:</span> ${user.email}</p>
+                        <p><span class="label">Date of Birth:</span> ${user.dateOfBirth}</p>
+                        <p><span class="label">Address:</span> ${user.address.street}, ${user.address.city}, ${user.address.state} ${user.address.zipCode}</p>
+                        <p><span class="label">Preferences:</span> Theme - ${user.preferences.theme}, Language - ${user.preferences.language}, Notifications - ${user.preferences.notifications}, Subscription - ${user.preferences.subscription}</p>
+                    `;
+
+                userListEl.appendChild(card);
+            });
+        })
+        .catch(err => {
+            statusEl.textContent = '加载失败：' + err.message;
+            console.error('Fetch error: ' + err.message);
+        });
+</script>
+</body>
+</html>
